@@ -1,0 +1,31 @@
+/*  Make full background of the page */
+.full_bg {
+	background: url(http://placehold.it/1920x1080) no-repeat center center fixed; 
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;	
+}
+
+body {
+	background: none;
+	position: relative;
+	margin: 0 auto;
+	width: 100%;
+	min-height:100%;
+}
+
+#main {
+	text-align:center;
+}
+
+/* Make transparent panel */
+.panel-transparent {
+	background: rgba(46, 51, 56, 0.2)!important;
+}
+
+/*  50% Container  in the middle of the screen */
+.container-50 {
+	width:50%; 
+	margin: 12% auto 12%;
+}

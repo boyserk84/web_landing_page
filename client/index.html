@@ -22,6 +22,27 @@
 	</script>
 </head>
 <body>
+
+<!-- Pop Up Modal Dialog --->
+<div class="modal fade success-modal-modal-sm" id="popUp-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+		<div class="modal-header">{headerText}</div>
+			<div class="modal-body">
+				<p>{Body Text}</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" id="popUp-btn" class="btn btn-primary" data-dismiss="modal">
+					<span id="popUp-btn-icon" class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+					<span id="popUp-btn-text">{ButtonText}</span>
+				</button>
+			</div>
+    </div>
+  </div>
+</div>
+<!-- End of Modal Dialog --->
+
+<!-- Main Page -->
 		<div class="container-fluid container-50" id="main">
 			<div class="panel panel-default panel-transparent">
 				<div class="panel-body">
@@ -32,10 +53,10 @@
 						<p> <strong>Get Social! </strong> Twitter | Instagram | Facebook </p>
 					</div>
 					
-					<form class="form-inline" id="subscribeForm">
+					<form  id="subscribeForm" class="form-inline">
 						<div class="form-group">
 							<label class="sr-only" for="inputEmail">Enter Your Email Address</label>
-							<input type="email" class="form-control" id="inputEmail" placeholder="Enter Your Email Address" required>
+							<input type="email" id="inputEmail" name="inputEmail" class="form-control" placeholder="Enter Your Email Address" required>
 						</div>
 						<button class="btn btn-default" type="submit">Let Me Know!</button>
 					</form>
@@ -47,5 +68,6 @@
 				</div><!--panel-body-->
 			</div><!--panel panel-default-->
 		</div> <!--container-fluid-->
+<!--End of Main Page -->
 </body>
 </html>

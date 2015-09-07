@@ -40,8 +40,36 @@ function save(arr)
 	return false;
 }
 
+function initializePopUpDialog( dialogType, data )
+{
+	$('.modal-header').text( data.header );
+	$('.modal-body').text( data.body );
+	$('#popUp-btn').find('#popUp-btn-text').html( data.button );
+	
+	if ( dialogType == "fail" )
+	{
+		$('#popUp-btn').removeClass('btn btn-primary');
+		$('#popUp-btn').addClass('btn btn-danger');
+		
+		$('#popUp-btn').find('#popUp-btn-icon').removeClass("glyphicon glyphicon-ok");
+		$('#popUp-btn').find('#popUp-btn-icon').addClass("glyphicon glyphicon-exclamation-sign");
+	} else if ( dialogType == "success") 
+	{
+		$('#popUp-btn').removeClass('btn btn-danger');
+		$('#popUp-btn').addClass('btn btn-primary');
+		$('#popUp-btn').find('#popUp-btn-icon').removeClass("glyphicon glyphicon-exclamation-sign");
+		$('#popUp-btn').find('#popUp-btn-icon').addClass("glyphicon glyphicon-ok");
+
+		$('#inputEmail').val('');	// clear inputEmail field		
+	}
+}
+
 // OnReady Event
 $(document).ready(function() {
+	var mainTemplate = $('#landingPage_Template').html();
+	var to =  _.template( mainTemplate ) ( DATA ) ;
+	$('#main').html(to);
+	
 	// On Submit Event
 	$("#subscribeForm").submit(function(e)
 		{ 
@@ -49,30 +77,14 @@ $(document).ready(function() {
 			arr = $(this).serializeArray();
 			if ( !validate(arr) )
 			{
-				// TODO: Data drive texts 
-				$('.modal-header').text("Failed");
-				$('.modal-body').text("Blah Blah");
-				$('#popUp-btn').removeClass('btn btn-primary');
-				$('#popUp-btn').addClass('btn btn-danger');
-				$('#popUp-btn').find('#popUp-btn-text').html("Retry");
-				$('#popUp-btn').find('#popUp-btn-icon').removeClass("glyphicon glyphicon-ok");
-				$('#popUp-btn').find('#popUp-btn-icon').addClass("glyphicon glyphicon-exclamation-sign");
-				console.log("Validation failed");
+				initializePopUpDialog( "fail", DATA.popUp.fail );
 			} else {
-				$('.modal-header').text("Congratulation");
-				$('.modal-body').text("Lorem Lorem IpSem IpSem Pass");
-				$('#popUp-btn').removeClass('btn btn-danger');
-				$('#popUp-btn').addClass('btn btn-primary');
-				$('#popUp-btn').find('#popUp-btn-text').html("OK");
-				$('#popUp-btn').find('#popUp-btn-icon').removeClass("glyphicon glyphicon-exclamation-sign");
-				$('#popUp-btn').find('#popUp-btn-icon').addClass("glyphicon glyphicon-ok");
-				console.log("Pass validation");
-				$('#inputEmail').val('');	// clear inputEmail field
+				initializePopUpDialog("success", DATA.popUp.success);
 			}
 			
 			// Check if save is done, otherwise, spit out error message
 			
-			$('#popUp-modal').modal('show');
+			$('#popUp-modal').modal('show');	// show the popUp dialog
 			e.preventDefault();
 		} 
 	);

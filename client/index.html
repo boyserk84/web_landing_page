@@ -14,9 +14,41 @@
 
 	<!-- Latest compiled and minified JavaScript -->
 	<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+	<script src="http://underscorejs.org/underscore-min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+		
+	<!-- Customzied Template -->
+	<script type="text/template" id="landingPage_Template">
+		<div class="container-fluid container-50">
+			<div class="panel panel-default panel-transparent">
+				<div class="panel-body">
+					<h1><%- header %></h1>
+					<p><%- body %></p>
+					
+					<div class="container-fluid">
+						<p> <strong>Get Social! </strong> Twitter | Instagram | Facebook </p>
+					</div>
+					
+					<form  id="subscribeForm" class="form-inline">
+						<div class="form-group">
+							<label class="sr-only" for="inputEmail">Enter Your Email Address</label>
+							<input type="email" id="inputEmail" name="inputEmail" class="form-control" placeholder="Enter Your Email Address" required>
+						</div>
+						<button class="btn btn-default" type="submit">Let Me Know!</button>
+					</form>
+					
+					<div class="container-fluid">
+						<span class="glyphicon glyphicon-copyright-mark" aria-hidden="true"></span> <%-footer %>
+					</div>
+					
+				</div><!--panel-body-->
+			</div><!--panel panel-default-->
+		</div> <!--container-fluid--> 
+	</script>
+	<!-- End of Template -->
 	
 	<!-- Customized JS -->
+	<script src="js/config.js"></script>
 	<script src="js/startup.js"></script>
 
 	</script>
@@ -43,31 +75,7 @@
 <!-- End of Modal Dialog --->
 
 <!-- Main Page -->
-		<div class="container-fluid container-50" id="main">
-			<div class="panel panel-default panel-transparent">
-				<div class="panel-body">
-					<h1>Aenean vel purus magna</h1>
-					<p> <strong>Lorem Disrem </strong> Curabitur in sagittis eros. Pellentesque in rhoncus ex. Nullam nec erat nec lectus fermentum ullamcorper. Donec aliquam tellus eros, sed fermentum lectus suscipit eget. Nullam odio mauris, viverra et urna eget, congue scelerisque turpis.</p>
-					
-					<div class="container-fluid">
-						<p> <strong>Get Social! </strong> Twitter | Instagram | Facebook </p>
-					</div>
-					
-					<form  id="subscribeForm" class="form-inline">
-						<div class="form-group">
-							<label class="sr-only" for="inputEmail">Enter Your Email Address</label>
-							<input type="email" id="inputEmail" name="inputEmail" class="form-control" placeholder="Enter Your Email Address" required>
-						</div>
-						<button class="btn btn-default" type="submit">Let Me Know!</button>
-					</form>
-					
-					<div class="container-fluid">
-						<span class="glyphicon glyphicon-copyright-mark" aria-hidden="true"></span> Copyright 2015 LandingPage. All rights reserved.
-					</div>
-					
-				</div><!--panel-body-->
-			</div><!--panel panel-default-->
-		</div> <!--container-fluid-->
+<div id="main"></div>
 <!--End of Main Page -->
 </body>
 </html>

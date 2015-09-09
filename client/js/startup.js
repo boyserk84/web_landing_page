@@ -36,11 +36,33 @@ function validate(arr)
  */
 function save(arr)
 {
-	
-	return false;
+	if ( arr != null && arr.length > 0 ) 
+	{
+		var data = new WaitingUserData();
+		data.Init( arr[0].value , 
+			function(response, code) 
+			{
+				if ( code != 0 ) 
+				{
+					// Error response is received from the server side.
+					initializePopUpDialog( "error", DATA.popUp.error, false);
+				}
+				$('#popUp-modal').modal('show');	// Manually, show the popUp dialog
+			} 
+		);
+		data.Save();
+	} else {
+		initializePopUpDialog("error", DATA.popUp.error, true );
+	}
 }
 
-function initializePopUpDialog( dialogType, data )
+/**
+ * Initialize the pop dialog with the given data
+ * @param dialogType				Dialog type to pop up
+ * @param data							Data to show on the dialog
+ * @param showNow					Whether to show the pop up dialog immediately
+ */
+function initializePopUpDialog( dialogType, data, showNow )
 {
 	$('.modal-header').text( data.header );
 	$('.modal-body').text( data.body );
@@ -61,11 +83,38 @@ function initializePopUpDialog( dialogType, data )
 		$('#popUp-btn').find('#popUp-btn-icon').addClass("glyphicon glyphicon-ok");
 
 		$('#inputEmail').val('');	// clear inputEmail field		
+	} else {
+		$('#popUp-btn').removeClass('btn btn-primary');
+		$('#popUp-btn').addClass('btn btn-danger');
+		
+		$('#popUp-btn').find('#popUp-btn-icon').removeClass("glyphicon glyphicon-ok");
+		$('#popUp-btn').find('#popUp-btn-icon').addClass("glyphicon glyphicon-exclamation-sign");
+	}
+	
+	if ( showNow == true )
+	{
+		$('#popUp-modal').modal('show');	// show the popUp dialog
 	}
 }
 
+/**
+ * Initialize 3rd party dependency 
+ */
+function initDependencies()
+{
+	// Add any dependency here
+	Parse.initialize(CONFIG.appId , CONFIG.appKey);
+	
+}
+
+//////////////////////////////////////////
+// This is where everything begins.
+/////////////////////////////////////////
 // OnReady Event
 $(document).ready(function() {
+	
+	initDependencies();
+	
 	var mainTemplate = $('#landingPage_Template').html();
 	var to =  _.template( mainTemplate ) ( DATA ) ;
 	$('#main').html(to);
@@ -77,14 +126,11 @@ $(document).ready(function() {
 			arr = $(this).serializeArray();
 			if ( !validate(arr) )
 			{
-				initializePopUpDialog( "fail", DATA.popUp.fail );
+				initializePopUpDialog( "fail", DATA.popUp.fail , true );
 			} else {
-				initializePopUpDialog("success", DATA.popUp.success);
+				initializePopUpDialog("success", DATA.popUp.success , false);
+				save(arr);	// save data
 			}
-			
-			// Check if save is done, otherwise, spit out error message
-			
-			$('#popUp-modal').modal('show');	// show the popUp dialog
 			e.preventDefault();
 		} 
 	);

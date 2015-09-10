@@ -26,20 +26,25 @@ function validate(arr)
 		{
 			result = result && validateEmail( val );
 		}
+		// TODO: Add more validation based on the type of the input
+		
 	}
 	
 	return result;
 }
 
 /**
- * Save data and transmit it back to the server
+ * Save data and transmit it back to the server.
+ * NOTE: After receiving the response back, pop the dialog. 
+ * @param arr	Data in  form of array of JSON object
+ * 			i.e. { name => "name_of_the_field", value=> "value_from_the_field" }
  */
 function save(arr)
 {
 	if ( arr != null && arr.length > 0 ) 
 	{
 		var data = new WaitingUserData();
-		data.Init( arr[0].value , 
+		data.Init( arr , 
 			function(response, code) 
 			{
 				if ( code != 0 ) 
@@ -100,11 +105,21 @@ function initializePopUpDialog( dialogType, data, showNow )
 /**
  * Initialize 3rd party dependency 
  */
-function initDependencies()
+function InitDependencies()
 {
 	// Add any dependency here
 	Parse.initialize(CONFIG.appId , CONFIG.appKey);
 	
+}
+
+/**
+ * Bind data to the micro template and render to view.
+ */
+function BindDataToView()
+{
+	var mainTemplate = $('#landingPage_Template').html();
+	var to =  _.template( mainTemplate ) ( DATA ) ;
+	$('#main').html(to);
 }
 
 //////////////////////////////////////////
@@ -113,11 +128,9 @@ function initDependencies()
 // OnReady Event
 $(document).ready(function() {
 	
-	initDependencies();
+	InitDependencies();
 	
-	var mainTemplate = $('#landingPage_Template').html();
-	var to =  _.template( mainTemplate ) ( DATA ) ;
-	$('#main').html(to);
+	BindDataToView();
 	
 	// On Submit Event
 	$("#subscribeForm").submit(function(e)
@@ -131,6 +144,7 @@ $(document).ready(function() {
 				initializePopUpDialog("success", DATA.popUp.success , false);
 				save(arr);	// save data
 			}
+			// Prevent refresh
 			e.preventDefault();
 		} 
 	);
